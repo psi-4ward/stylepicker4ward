@@ -25,7 +25,7 @@ class Stylepicker4ward extends Controller
 		while($objErg->next())
 		{
 			$GLOBALS['TL_DCA'][$table]['fields'][$objErg->fld]['eval']['tl_class'] .= ' wizard';
-			$GLOBALS['TL_DCA'][$table]['fields'][$objErg->fld]['wizard'][] = array('Stylepicker4ward','getStylepicker');
+			$GLOBALS['TL_DCA'][$table]['fields'][$objErg->fld]['wizard']['stylepicker'] = array('Stylepicker4ward','getStylepicker');
 		}
 		
 		// little hack to adjust the wizard for the article-section
