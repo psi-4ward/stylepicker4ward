@@ -61,8 +61,8 @@ class Stylepicker4ward_Wizard extends Backend
 		
 		$tbl = $this->Input->get('tbl');
 		$sec = false;
-		$pids = false;
 		$cond = false;
+		$layout = array();
 		
 		$id = $this->Input->get('id');
 		
@@ -81,8 +81,7 @@ class Stylepicker4ward_Wizard extends Backend
 				
 			case 'tl_page':
 				$objPage = $this->getPageDetails($id);
-				$objLayout = $this->Database->prepare("SELECT stylesheet FROM tl_layout WHERE id=?")->limit(1)->execute($objPage->layout);
-				$pids = unserialize($objLayout->stylesheet);
+				$layout = $objPage->layout;
 				
 			break;
 			
@@ -93,7 +92,7 @@ class Stylepicker4ward_Wizard extends Backend
 				 * out-parameter as array or FALSE if the callback does not match:
 				 * 		array($tbl,$pids,$sec,$cond)
 				 * 		str $tbl: table name, mostly the same as from the in-parameter
-				 * 		int/array $pids: one ID or an array of IDs of Stylesheets
+				 * 		array $layout: ID of Pagelayout
 				 * 		str $sec: a section (column) identifier
 				 * 		str $cond: some addition condition
 				 */
@@ -105,7 +104,7 @@ class Stylepicker4ward_Wizard extends Backend
 						$erg = $this->$callback[0]->$callback[1]($tbl, $id);
 						if(is_array($erg))
 						{
-							list($tbl,$pids,$sec,$cond) = $erg;
+							list($tbl,$layout,$sec,$cond) = $erg;
 							break;
 						}
 					}
@@ -116,8 +115,7 @@ class Stylepicker4ward_Wizard extends Backend
 		// build where clause
 		// respect the order for little query optimising
 		$arrWhere = array();
-		if(is_array($pids)) $arrWhere[] = 'c.pid IN ('.implode(',',$pids).')';
-		if(!is_array($pids) && preg_match("~^\d+$~",$pids)) $arrWhere[] = 'c.pid='.$tbl;
+		if($layout) $arrWhere[] = $layout.' IN (c.layouts)';
 		$arrWhere[] = 'tbl="'.mysql_real_escape_string($tbl).'"';
 		if($sec) $arrWhere[] = 'sec="'.mysql_real_escape_string($sec).'"';
 		

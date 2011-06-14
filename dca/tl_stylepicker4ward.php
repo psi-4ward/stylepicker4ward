@@ -72,7 +72,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{info_legend},title,cssclass,description,image;{CEs_legend},_CEs,_CE_Row;{Article_legend},_Article,_Article_Row;{Pages_legend},_Pages'
+		'default'                     => '{info_legend},title,cssclass,description,image;{layouts_legend},layouts;{CEs_legend},_CEs,_CE_Row;{Article_legend},_Article,_Article_Row;{Pages_legend},_Pages'
 	),
 	
 	// Fields
@@ -107,6 +107,16 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'sorting'                 => true,
 			'search'                  => true,
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50')
+		),
+		
+		'layouts' => array
+		(
+			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['layouts'],
+			'inputType'               => 'checkbox',
+			'options_callback'		  => array('tl_stylepicker4ward','getPagelayouts'),
+			'load_callback'			  => array(array('tl_stylepicker4ward','loadPagelayouts')),
+			'save_callback'			  => array(array('tl_stylepicker4ward','savePagelayouts')),
+			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')		
 		),
 		
 		// Content Elements
@@ -302,6 +312,17 @@ class tl_stylepicker4ward extends Controller
 	
 	
 	
+	public function loadPagelayouts($val)
+	{
+		$val = explode(',',$val);
+		return serialize($val);
+	}	
+	public function savePagelayouts($val)
+	{
+		$val = unserialize($val);
+		return implode(',',$val);
+	}
+	
 	/**
 	 * Helperfunction to save a target
 	 * @param int $pid
@@ -342,6 +363,19 @@ class tl_stylepicker4ward extends Controller
 		if(is_array($custom)) $ret = array_merge($ret,$custom);
 		
 		return $ret;
+	}
+
+	/**
+	 * get all pagelayouts for the current theme
+	 * @param DataContainer $dc
+	 * @return array
+	 */
+	public function getPagelayouts($dc)
+	{
+		$objLayouts = $this->Database->prepare('SELECT id,name FROM tl_layout WHERE pid=?')->execute($dc->activeRecord->pid);
+		$arrLayouts = array();
+		while($objLayouts->next())	$arrLayouts[$objLayouts->id] = $objLayouts->name;
+		return $arrLayouts;
 	}
 	
 	/**
