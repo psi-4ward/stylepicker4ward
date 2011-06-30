@@ -9,11 +9,16 @@
  * @filesource
  */
 
-$GLOBALS['TL_DCA']['tl_theme']['list']['operations']['stylepicker4ward'] = array
-(
-	'label'               => &$GLOBALS['TL_LANG']['tl_theme']['stylepicker4ward'],
-	'href'                => 'table=tl_stylepicker4ward',
-	'icon'                => 'system/modules/_stylepicker4ward/html/icon.png'
+array_insert($GLOBALS['TL_DCA']['tl_theme']['list']['operations'],6,
+	array('stylepicker4ward' =>
+		array
+		(
+			'label'               => &$GLOBALS['TL_LANG']['tl_theme']['stylepicker4ward'],
+			'href'                => 'table=tl_stylepicker4ward',
+			'icon'                => 'system/modules/_stylepicker4ward/html/icon.png'
+		)
+	)
 );
+
 
 ?>

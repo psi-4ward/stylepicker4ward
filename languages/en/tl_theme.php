@@ -9,4 +9,4 @@
  * @filesource
  */
 
-$GLOBALS['TL_LANG']['tl_theme']['stylepicker4ward'] = array('CSS-Klassen Wizard','Hier können Sie die Vorlagen für den CSS-Klassen Wizard einstellen.');
+$GLOBALS['TL_LANG']['tl_theme']['stylepicker4ward'] = array('Css-class wizard','Here you can adjust the template for the css-class wizard.');
