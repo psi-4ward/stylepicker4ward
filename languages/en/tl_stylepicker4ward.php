@@ -12,6 +12,7 @@
 // Buttons
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['new'] 	= array('New css-class','Create new css-class');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['edit'] 	= array('Edit css-class','Edit the css-class ID %s');
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['copy'] 	= array('Duplicate css-class','Duplicate the css-class ID %s');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['delete'] = array('Delete css-class','Delete the css-class ID %s');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['show'] 	= array('Show css-class','Show css-class ID %s');
 

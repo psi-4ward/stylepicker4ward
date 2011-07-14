@@ -12,6 +12,7 @@
 // Buttons
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['new'] 	= array('Neue CSS-Klasse','Neue CSS-Klasse erstellen');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['edit']	= array('CSS-Klasse bearbeiten','Die CSS-Klasse ID %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['edit']	= array('CSS-Klasse duplizieren','Die CSS-Klasse ID %s duplizieren');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['delete']= array('CSS-Klasse löschen','Die CSS-Klasse ID %s löschen');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['show'] 	= array('CSS-Klasse anzeigen','Die CSS-Klasse ID %s anzeigen');
 

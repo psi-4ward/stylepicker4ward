@@ -17,7 +17,8 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	(
 		'dataContainer'               => 'Table',
 		'ptable'					  => 'tl_style_sheet',
-		'enableVersioning'            => true
+		'enableVersioning'            => true,
+		'oncopy_callback'			  => array(array('tl_stylepicker4ward','copy'))
 	),
 
 	// List
@@ -53,6 +54,12 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
+			'copy' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['copy'],
+				'href'                => 'act=copy',
+				'icon'                => 'copy.gif'
+			),			
 			'delete' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['delete'],
@@ -387,6 +394,15 @@ class tl_stylepicker4ward extends Controller
 		return '';
 	}
 	
+	
+	public function copy($insertID, $dc)
+	{
+		// also copy targets
+		$this->Database->prepare('INSERT INTO tl_stylepicker4ward_target (pid,tstamp,tbl,fld,cond,sec)
+									SELECT ?, UNIX_TIMESTAMP(), tbl,fld,cond,sec 
+									FROM tl_stylepicker4ward_target 
+									WHERE pid=?')->execute($insertID,$dc->id);
+	}
 
 }
 
