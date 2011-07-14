@@ -4,9 +4,8 @@ var Stylepicker4ward = new Class(
     initialize: function(cont,parentField)
     {
 		this.checkboxes = cont.getElements('input');
-	
 		// find parent class-field
-		var parentField = parent.document.getElementById(parentField);
+		var parentField = $(parent.document.getElementById(parentField));
 		if(parentField == null)
 		{
 			alert('Parent-Field not found! [E11]');
@@ -20,7 +19,7 @@ var Stylepicker4ward = new Class(
 				alert('Parent-Field not found! [E12]');
 				return;
 			}
-			this.parentField = parentField[parentField.length-1];
+			this.parentField = $(parentField[parentField.length-1]);
 		}
 		else
 		{
@@ -38,7 +37,7 @@ var Stylepicker4ward = new Class(
     	{
     		for(var j=0;j<this.checkboxes.length;j++)
     		{
-    			if(classes[i] == this.checkboxes[j].get('value'))
+    			if(classes[i] == $(this.checkboxes[j]).get('value'))
     				this.checkboxes[j].checked = true;
     		}
     	}
