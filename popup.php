@@ -124,7 +124,9 @@ class Stylepicker4ward_Wizard extends Backend
 								  				FROM tl_stylepicker4ward_target AS t
 								  				LEFT JOIN tl_stylepicker4ward AS c ON (t.pid = c.id)
 								  				WHERE '.implode(' AND ',$arrWhere).'
-								  				GROUP BY c.id');
+								  				GROUP BY c.id
+								  				ORDER BY c.title
+								  				');
 		$arrItems = $objItems->fetchAllAssoc();
 						
 		// filter condition

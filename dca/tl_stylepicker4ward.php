@@ -367,8 +367,8 @@ class tl_stylepicker4ward extends Controller
 		$ret = array('header','left','right','main','footer');
 		
 		$custom = explode(',',$GLOBALS['TL_CONFIG']['customSections']);
-		if(is_array($custom)) $ret = array_merge($ret,$custom);
-		
+		if(strlen($GLOBALS['TL_CONFIG']['customSections']) && is_array($custom)) $ret = array_merge($ret,$custom);
+
 		return $ret;
 	}
 
