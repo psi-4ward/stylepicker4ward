@@ -115,6 +115,7 @@ class Stylepicker4ward_Wizard extends Backend
 		// build where clause
 		// respect the order for little query optimising
 		$arrWhere = array();
+		$arrWhere[] = 'c.tstamp <> 0';
 		if($layout) $arrWhere[] = $layout.' IN (c.layouts)';
 		$arrWhere[] = 'tbl="'.mysql_real_escape_string($tbl).'"';
 		if($sec) $arrWhere[] = 'sec="'.mysql_real_escape_string($sec).'"';
