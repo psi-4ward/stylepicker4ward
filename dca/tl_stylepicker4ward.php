@@ -16,7 +16,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	'config' => array
 	(
 		'dataContainer'               => 'Table',
-		'ptable'					  => 'tl_style_sheet',
+		'ptable'					  => 'tl_theme',
 		'enableVersioning'            => true,
 		'oncopy_callback'			  => array(array('tl_stylepicker4ward','copy'))
 	),
