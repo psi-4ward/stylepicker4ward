@@ -81,7 +81,7 @@ parent.REQUEST_TOKEN = REQUEST_TOKEN;
 <script>
 <!--//--><![CDATA[//><!--
 window.addEvent('domready',function(){
-	new Stylepicker4ward($('styleItems'),'<?php echo $this->field;?>');
+	<p class="error"><?php echo $GLOBALS['TL_LANG']['MSC']['stylepicker4ward_noItems'];?></p>
 });
 //--><!]]>
 </script>

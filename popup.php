@@ -50,7 +50,7 @@ class Stylepicker4ward_Wizard extends Backend
 
 	public function generate()
 	{
-		$this->Template->headline = 'CSS-Klassen Wizard';
+		$this->Template->headline = $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'];
 		
 		$field = $this->Input->get('fld');
 		if(!preg_match("~^[a-z\-_0-9]+$~i",$field))

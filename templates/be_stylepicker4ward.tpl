@@ -69,7 +69,7 @@ var CONTAO_EXPAND = '<?php echo $this->expandNode; ?>';
 	
 <?php endforeach;?>
 <?php else:?>
-	<p class="error">No Items found!</p>
+	<p class="error"><?php echo $GLOBALS['TL_LANG']['MSC']['stylepicker4ward_noItems'];?></p>
 <?php endif;?>
 </div>
 <script>
