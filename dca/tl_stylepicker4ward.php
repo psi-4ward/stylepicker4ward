@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'options_callback'		  => array('tl_stylepicker4ward','getPagelayouts'),
 			'load_callback'			  => array(array('tl_stylepicker4ward','loadPagelayouts')),
 			'save_callback'			  => array(array('tl_stylepicker4ward','savePagelayouts')),
-			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>false, 'tl_class'=>'w50" style="height:auto;')		
+			'eval'					  => array('mandatory'=>true,'multiple'=>true, 'doNotSaveEmpty'=>false, 'tl_class'=>'w50" style="height:auto;')		
 		),
 		
 		// Content Elements
