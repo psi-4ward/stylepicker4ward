@@ -38,6 +38,15 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		),
 		'global_operations' => array
 		(
+			/*
+			'import' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['import'],
+				'href'                => 'key=cssWizImport',
+				'class'               => 'header_css_import',
+				'attributes'          => 'onclick="Backend.getScrollOffset();"'
+			),
+			*/
 			'all' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
@@ -79,7 +88,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{info_legend},title,cssclass,description,image;{layouts_legend},layouts;{CEs_legend},_CEs,_CE_Row;{Article_legend},_Article,_Article_Row;{Pages_legend},_Pages'
+		'default'                     => '{info_legend},title,cssclass,description,image;{layouts_legend},layouts;{CEs_legend},_CEs,_CE_Row;{Article_legend},_Article,_Article_Row,_ArticleTeaser;{Pages_legend},_Pages'
 	),
 	
 	// Fields
@@ -157,6 +166,14 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticles')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
 		),
+		'_ArticleTeaser' => array
+		(
+			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser'],
+			'inputType'               => 'checkbox',
+			'load_callback'			  => array(array('tl_stylepicker4ward','loadArticleTeasers')),
+			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticleTeasers')),
+			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
+		),
 		'_Article_Row' => array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row'],
@@ -176,7 +193,14 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'load_callback'			  => array(array('tl_stylepicker4ward','loadPages')),
 			'save_callback'			  => array(array('tl_stylepicker4ward','savePages')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
-		),		
+		),
+		
+		
+		'source' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['source'],
+			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>'dat', 'class'=>'mandatory')
+		)		
 	)
 );
 
@@ -216,7 +240,7 @@ class tl_stylepicker4ward extends Controller
 	public function saveArticles($val,$dc)
 	{
 		// delete all records for this table/pid
-		$this->truncateTargets($dc->id,'tl_article');
+		$this->truncateTargets($dc->id,'tl_article','cssID');
 		
 		if(strlen($val))
 		{
@@ -236,9 +260,37 @@ class tl_stylepicker4ward extends Controller
 	public function loadArticles($val,$dc)
 	{
 		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($dc->id,'tl_article');
+		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','cssID');
 		return ($objTargets->anz > 0) ? '1' : ''; 
 	}
+	
+	public function saveArticleTeasers($val,$dc)
+	{
+		// delete all records for this table/pid
+		$this->truncateTargets($dc->id,'tl_article','teaserCssID');
+		
+		if(strlen($val))
+		{
+			// get sections
+			$secs = $this->Input->post('_Article_Row');
+			if(!is_array($secs) || !count($secs))
+				return '';
+			
+			// save foreach section
+			foreach($secs as $sec)
+			{
+				$this->saveTarget($dc->id,'tl_article','teaserCssID',$sec);				
+			}			
+		}
+		return '';
+	}
+	public function loadArticleTeasers($val,$dc)
+	{
+		$arrReturn = array();
+		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','teaserCssID');
+		return ($objTargets->anz > 0) ? '1' : ''; 
+	}
+	
 	public function loadArticle_Rows($val,$dc)
 	{
 		$arrReturn = array();
@@ -351,10 +403,13 @@ class tl_stylepicker4ward extends Controller
 	 * @param int $pid
 	 * @param str $tbl
 	 */
-	protected function truncateTargets($pid,$tbl)
+	protected function truncateTargets($pid,$tbl,$fld=false)
 	{
-		$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($pid,$tbl);
-	}
+		if($fld)
+			$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($pid,$tbl,$fld);
+		else
+			$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($pid,$tbl);
+	}	
 	
 	
 	/**

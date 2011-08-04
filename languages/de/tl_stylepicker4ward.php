@@ -35,11 +35,13 @@ $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CEs']			= array('Inhaltselemente','
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row']		= array('Spalten','Das Inhaltselement muss in diesen Spalten liegen.');
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article']		= array('Artikel','Diese Styledefinition kann auf Artikel angewandt werden.');
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser']= array('Artikel-Teaser','Diese Styledefinition kann auf Artikel-Teaser angewandt werden.');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article_Row']	= array('Spalten','Der Artikel muss in diesen Spalten liegen.');
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Pages']		= array('Seiten','Diese Styledefinition kann auf Seiten angewandt werden.');
 
 
-
-
+// Import
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['import']	= array('Import','Importiert ein Vorlagenset');
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['source']	= array('Quelldatei','Wählen Sie die zu importierende Vorlagendatei.')
 ?>

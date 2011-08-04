@@ -33,6 +33,7 @@ $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CEs']		= array('Content elements','
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row']	= array('Columns','This Content element has to be in this column.');
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article']	= array('Article','This style definition can be used for articles.');
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser']= array('Article-teaser','This style definition can be used for article-teasers.');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article_Row']= array('Columns','The article has to be in these columns.');
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Pages']		= array('Pages','This style definition can be used for a page.');
