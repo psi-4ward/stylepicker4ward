@@ -16,9 +16,8 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	'config' => array
 	(
 		'dataContainer'               => 'Table',
-		'ptable'					  => 'tl_theme',
-		'enableVersioning'            => true,
-		'oncopy_callback'			  => array(array('tl_stylepicker4ward','copy'))
+		'ptable'					  => 'tl_style_sheet',
+		'enableVersioning'            => true
 	),
 
 	// List
@@ -38,15 +37,6 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		),
 		'global_operations' => array
 		(
-			/*
-			'import' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['import'],
-				'href'                => 'key=cssWizImport',
-				'class'               => 'header_css_import',
-				'attributes'          => 'onclick="Backend.getScrollOffset();"'
-			),
-			*/
 			'all' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
@@ -63,12 +53,6 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
-			'copy' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['copy'],
-				'href'                => 'act=copy',
-				'icon'                => 'copy.gif'
-			),			
 			'delete' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['delete'],
@@ -88,7 +72,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'default'                     => '{info_legend},title,cssclass,description,image;{layouts_legend},layouts;{CEs_legend},_CEs,_CE_Row;{Article_legend},_Article,_Article_Row,_ArticleTeaser;{Pages_legend},_Pages'
+		'default'                     => '{info_legend},title,cssclass,description,image;{layouts_legend},layouts;{CEs_legend},_CEs,_CE_Row;{Article_legend},_Article,_Article_Row;{Pages_legend},_Pages'
 	),
 	
 	// Fields
@@ -132,7 +116,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'options_callback'		  => array('tl_stylepicker4ward','getPagelayouts'),
 			'load_callback'			  => array(array('tl_stylepicker4ward','loadPagelayouts')),
 			'save_callback'			  => array(array('tl_stylepicker4ward','savePagelayouts')),
-			'eval'					  => array('mandatory'=>true,'multiple'=>true, 'doNotSaveEmpty'=>false, 'tl_class'=>'w50" style="height:auto;')		
+			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')		
 		),
 		
 		// Content Elements
@@ -166,14 +150,6 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticles')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
 		),
-		'_ArticleTeaser' => array
-		(
-			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser'],
-			'inputType'               => 'checkbox',
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadArticleTeasers')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticleTeasers')),
-			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
-		),
 		'_Article_Row' => array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row'],
@@ -193,14 +169,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'load_callback'			  => array(array('tl_stylepicker4ward','loadPages')),
 			'save_callback'			  => array(array('tl_stylepicker4ward','savePages')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
-		),
-		
-		
-		'source' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['source'],
-			'eval'                    => array('fieldType'=>'radio', 'files'=>true, 'filesOnly'=>true, 'extensions'=>'dat', 'class'=>'mandatory')
-		)		
+		),		
 	)
 );
 
@@ -240,7 +209,7 @@ class tl_stylepicker4ward extends Controller
 	public function saveArticles($val,$dc)
 	{
 		// delete all records for this table/pid
-		$this->truncateTargets($dc->id,'tl_article','cssID');
+		$this->truncateTargets($dc->id,'tl_article');
 		
 		if(strlen($val))
 		{
@@ -260,37 +229,9 @@ class tl_stylepicker4ward extends Controller
 	public function loadArticles($val,$dc)
 	{
 		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','cssID');
+		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($dc->id,'tl_article');
 		return ($objTargets->anz > 0) ? '1' : ''; 
 	}
-	
-	public function saveArticleTeasers($val,$dc)
-	{
-		// delete all records for this table/pid
-		$this->truncateTargets($dc->id,'tl_article','teaserCssID');
-		
-		if(strlen($val))
-		{
-			// get sections
-			$secs = $this->Input->post('_Article_Row');
-			if(!is_array($secs) || !count($secs))
-				return '';
-			
-			// save foreach section
-			foreach($secs as $sec)
-			{
-				$this->saveTarget($dc->id,'tl_article','teaserCssID',$sec);				
-			}			
-		}
-		return '';
-	}
-	public function loadArticleTeasers($val,$dc)
-	{
-		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','teaserCssID');
-		return ($objTargets->anz > 0) ? '1' : ''; 
-	}
-	
 	public function loadArticle_Rows($val,$dc)
 	{
 		$arrReturn = array();
@@ -403,13 +344,10 @@ class tl_stylepicker4ward extends Controller
 	 * @param int $pid
 	 * @param str $tbl
 	 */
-	protected function truncateTargets($pid,$tbl,$fld=false)
+	protected function truncateTargets($pid,$tbl)
 	{
-		if($fld)
-			$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($pid,$tbl,$fld);
-		else
-			$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($pid,$tbl);
-	}	
+		$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($pid,$tbl);
+	}
 	
 	
 	/**
@@ -422,8 +360,8 @@ class tl_stylepicker4ward extends Controller
 		$ret = array('header','left','right','main','footer');
 		
 		$custom = explode(',',$GLOBALS['TL_CONFIG']['customSections']);
-		if(strlen($GLOBALS['TL_CONFIG']['customSections']) && is_array($custom)) $ret = array_merge($ret,$custom);
-
+		if(is_array($custom)) $ret = array_merge($ret,$custom);
+		
 		return $ret;
 	}
 
@@ -449,15 +387,6 @@ class tl_stylepicker4ward extends Controller
 		return '';
 	}
 	
-	
-	public function copy($insertID, $dc)
-	{
-		// also copy targets
-		$this->Database->prepare('INSERT INTO tl_stylepicker4ward_target (pid,tstamp,tbl,fld,cond,sec)
-									SELECT ?, UNIX_TIMESTAMP(), tbl,fld,cond,sec 
-									FROM tl_stylepicker4ward_target 
-									WHERE pid=?')->execute($insertID,$dc->id);
-	}
 
 }
 
