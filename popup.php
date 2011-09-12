@@ -39,6 +39,7 @@ class Stylepicker4ward_Wizard extends Backend
 	public function __construct()
 	{
 		$this->import('BackendUser', 'User');
+		$this->import('Database');
 		parent::__construct();
 
 		$this->User->authenticate();
@@ -114,10 +115,13 @@ class Stylepicker4ward_Wizard extends Backend
 
 		// build where clause
 		// respect the order for little query optimising
+		if(!preg_match("~^[a-z0-9_\-]+$~i", $tbl)) die('unexpected chars in tbl-param');
+		if(!preg_match("~^[a-z0-9_\-]*$~i", $sec)) die('unexpected chars in sec-param');
+		
 		$arrWhere = array();
 		if($layout) $arrWhere[] = $layout.' IN (c.layouts)';
-		$arrWhere[] = 'tbl="'.mysql_real_escape_string($tbl).'"';
-		if($sec) $arrWhere[] = 'sec="'.mysql_real_escape_string($sec).'"';
+		$arrWhere[] = 'tbl="'.$tbl.'"';
+		if($sec) $arrWhere[] = 'sec="'.$sec.'"';
 		
 		// get all classes
 		$objItems = $this->Database->execute('	SELECT c.*, GROUP_CONCAT(DISTINCT t.cond SEPARATOR ",") AS cond
