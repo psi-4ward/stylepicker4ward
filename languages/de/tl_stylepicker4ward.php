@@ -12,6 +12,7 @@
 // Buttons
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['new'] 	= array('Neue CSS-Klasse','Neue CSS-Klasse erstellen');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['edit']	= array('CSS-Klasse bearbeiten','Die CSS-Klasse ID %s bearbeiten');
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['copy']      = array('CSS-Klasse duplizieren','Die CSS-Klasse ID %s duplizieren');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['delete']= array('CSS-Klasse löschen','Die CSS-Klasse ID %s löschen');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['show'] 	= array('CSS-Klasse anzeigen','Die CSS-Klasse ID %s anzeigen');
 
@@ -34,6 +35,7 @@ $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CEs']			= array('Inhaltselemente','
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row']		= array('Spalten','Das Inhaltselement muss in diesen Spalten liegen.');
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article']		= array('Artikel','Diese Styledefinition kann auf Artikel angewandt werden.');
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser']= array('Artikel-Teaser','Diese Styledefinition kann auf Artikel-Teaser angewandt werden.');
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article_Row']	= array('Spalten','Der Artikel muss in diesen Spalten liegen.');
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Pages']		= array('Seiten','Diese Styledefinition kann auf Seiten angewandt werden.');

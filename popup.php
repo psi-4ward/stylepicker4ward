@@ -51,7 +51,7 @@ class Stylepicker4ward_Wizard extends Backend
 
 	public function generate()
 	{
-		$this->Template->headline = 'CSS-Klassen Wizard';
+		$this->Template->headline = $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'];
 		
 		$field = $this->Input->get('fld');
 		if(!preg_match("~^[a-z\-_0-9]+$~i",$field))
@@ -119,6 +119,8 @@ class Stylepicker4ward_Wizard extends Backend
 		if(!preg_match("~^[a-z0-9_\-]*$~i", $sec)) die('unexpected chars in sec-param');
 		
 		$arrWhere = array();
+		$arrWhere[] = 'c.tstamp <> 0';
+		if($layout) $arrWhere[] = 'FIND_IN_SET('.$layout.',c.layouts)';		
 		if($layout) $arrWhere[] = $layout.' IN (c.layouts)';
 		$arrWhere[] = 'tbl="'.$tbl.'"';
 		if($sec) $arrWhere[] = 'sec="'.$sec.'"';
@@ -128,7 +130,8 @@ class Stylepicker4ward_Wizard extends Backend
 								  				FROM tl_stylepicker4ward_target AS t
 								  				LEFT JOIN tl_stylepicker4ward AS c ON (t.pid = c.id)
 								  				WHERE '.implode(' AND ',$arrWhere).'
-								  				GROUP BY c.id');
+								  				GROUP BY c.id
+								  				ORDER BY c.title');
 		$arrItems = $objItems->fetchAllAssoc();
 						
 		// filter condition
