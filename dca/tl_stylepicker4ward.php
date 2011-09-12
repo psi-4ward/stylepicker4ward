@@ -16,8 +16,10 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	'config' => array
 	(
 		'dataContainer'               => 'Table',
-		'ptable'					  => 'tl_style_sheet',
-		'enableVersioning'            => true
+		'ptable'					  => 'tl_theme',
+		'enableVersioning'            => true,
+		'oncopy_callback'			  => array(array('tl_stylepicker4ward','copy'))
+	
 	),
 
 	// List
@@ -53,6 +55,12 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 				'href'                => 'act=edit',
 				'icon'                => 'edit.gif'
 			),
+			'copy' => array
+			(
+				'label'				  => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['copy'],
+				'href'				  => 'act=copy',
+				'icon'				  => 'copy.gif'
+			),			
 			'delete' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['delete'],
@@ -116,7 +124,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'options_callback'		  => array('tl_stylepicker4ward','getPagelayouts'),
 			'load_callback'			  => array(array('tl_stylepicker4ward','loadPagelayouts')),
 			'save_callback'			  => array(array('tl_stylepicker4ward','savePagelayouts')),
-			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')		
+			'eval'					  => array('mandatory'=>true, 'multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')		
 		),
 		
 		// Content Elements
@@ -360,8 +368,8 @@ class tl_stylepicker4ward extends Controller
 		$ret = array('header','left','right','main','footer');
 		
 		$custom = explode(',',$GLOBALS['TL_CONFIG']['customSections']);
-		if(is_array($custom)) $ret = array_merge($ret,$custom);
-		
+		if(strlen($GLOBALS['TL_CONFIG']['customSections']) && is_array($custom)) $ret = array_merge($ret,$custom);
+				
 		return $ret;
 	}
 
@@ -386,6 +394,22 @@ class tl_stylepicker4ward extends Controller
 	{
 		return '';
 	}
+	
+	/**
+	 * copy a definition
+	 * @param int $insertID
+	 * @param DataContainer $dc
+	 */
+	public function copy($insertID, $dc)
+	{
+		// also copy targets
+		$this->Database->prepare('INSERT INTO tl_stylepicker4ward_target (pid,tstamp,tbl,fld,cond,sec)
+									SELECT ?, UNIX_TIMESTAMP(), tbl,fld,cond,sec 
+									FROM tl_stylepicker4ward_target 
+									WHERE pid=?')->execute($insertID,$dc->id);
+	}
+
+	
 	
 
 }
