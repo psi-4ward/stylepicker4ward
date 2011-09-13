@@ -122,7 +122,6 @@ class Stylepicker4ward_Wizard extends Backend
 		$arrWhere = array();
 		$arrWhere[] = 'c.tstamp <> 0';
 		if($layout) $arrWhere[] = 'FIND_IN_SET('.$layout.',c.layouts)';		
-		if($layout) $arrWhere[] = $layout.' IN (c.layouts)';
 		$arrWhere[] = 'tbl="'.$tbl.'"';
 		if($sec) $arrWhere[] = 'sec="'.$sec.'"';
 		if(strlen($fld)) $arrWhere[] = 'fld="'.$fld.'"';
