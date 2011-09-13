@@ -46,6 +46,12 @@ var Stylepicker4ward = new Class(
 	
 	clickItem: function(e,el)
 	{
+		if(e.target.get('tag') == 'img' && e.target.get('rel').length > 0)
+		{
+			this.showImage(e,e.target);
+			return;
+		}
+		
 		var inp = el.getElement('input');
 		if(e == null || e.target.get('tag') != 'input')
 		{
@@ -68,6 +74,29 @@ var Stylepicker4ward = new Class(
 			classes.erase(classname);
 		}
 		this.parentField.set('value',classes.join(' '));
+	},
+	
+	showImage: function(ev,el)
+	{
+		var img = new Asset.image(el.get('rel'),{
+			onLoad: function()
+			{
+				var size = {x:img.get('width'),y:img.get('height')};
+				img.setStyles({
+					'height':0,
+					'width':0,
+					'position':'absolute',
+					'left':el.getPosition().x+'px',
+					'top':el.getPosition().y+'px'
+				});
+				img.set('morph',{duration:400,transition:'quint:in:out'});
+				img.addEvent('click',function(){
+					img.set('morph',{onComplete:function(){img.destroy();}}).morph({height:0,width:0});
+				});
+				img.inject(document.body);
+				img.morph({height:size.y,width:size.y});
+			}
+		});
 	}
 	
 });
