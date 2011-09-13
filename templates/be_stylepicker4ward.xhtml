@@ -66,16 +66,18 @@ parent.REQUEST_TOKEN = REQUEST_TOKEN;
 	<div class="item" onmouseout="Theme.hoverDiv(this, 0);" onmouseover="Theme.hoverDiv(this, 1);">
 	<div style="padding:5px 10px" class="clr">
 		<input type="checkbox" style="float:right;" value="<?php echo $item['cssclass'];?>"/>
-		<h2><?php echo $item['title'];?> <span style="font-weight:normal">(<?php echo $item['cssclass'];?>)</span></h2>
-		<?php if(strlen($item['image'])):?><img src="<?php echo $this->getImage($item['image'],80,80);?>" alt="" style="float:left"/><?php endif;?>
-		<p class="description"><?php echo $item['description'];?></p>
+		<?php if(strlen($item['image'])):?><img src="<?php echo $this->getImage($item['image'],80,80,'proportional');?>" alt="" style="float:left;"/><?php endif;?>
+		<div style="margin-left:100px">
+			<h2><?php echo $item['title'];?> <span style="font-weight:normal">(<?php echo $item['cssclass'];?>)</span></h2>
+			<?php if(strlen($item['description'])):?><p class="description"><?php echo $item['description'];?></p><?php endif;?>
+		</div>
 	</div>
 		<hr style="height:1px;margin:0px;"/>
 	</div>
 	
 <?php endforeach;?>
 <?php else:?>
-	<p class="error">No Items found!</p>
+	<p class="error"><?php echo $GLOBALS['TL_LANG']['MSC']['stylepicker4ward_noItems'];?></p>
 <?php endif;?>
 </div>
 <script>

@@ -123,7 +123,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'options_callback'		  => array('tl_stylepicker4ward','getPagelayouts'),
 			'load_callback'			  => array(array('tl_stylepicker4ward','loadPagelayouts')),
 			'save_callback'			  => array(array('tl_stylepicker4ward','savePagelayouts')),
-			'eval'					  => array('mandatory'=>true, 'multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')		
+			'eval'					  => array('mandatory'=>true, 'multiple'=>true, 'doNotSaveEmpty'=>false, 'tl_class'=>'w50" style="height:auto;')		
 		),
 		
 		// Content Elements
@@ -157,6 +157,14 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticles')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
 		),
+		'_ArticleTeaser' => array
+		(
+			'label'					  => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser'],
+			'inputType'				  => 'checkbox',
+			'load_callback'			  => array(array('tl_stylepicker4ward','loadArticleTeasers')),
+			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticleTeasers')),
+			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
+		),
 		'_Article_Row' => array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row'],
@@ -166,14 +174,6 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'save_callback'			  => array(array('tl_stylepicker4ward','doNothing')),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_article'],
 			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')
-		),
-		'_ArticleTeaser' => array
-		(
-			'label'					  => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser'],
-			'inputType'				  => 'checkbox',
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadArticleTeasers')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticleTeasers')),
-			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
 		),
 		
 		// Pages 
@@ -244,7 +244,7 @@ class tl_stylepicker4ward extends Controller
 	public function loadArticles($val,$dc)
 	{
 		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($dc->id,'tl_article');
+		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','cssID');
 		return ($objTargets->anz > 0) ? '1' : ''; 
 	}
 	
@@ -274,7 +274,7 @@ class tl_stylepicker4ward extends Controller
 		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','teaserCssID');
 		return ($objTargets->anz > 0) ? '1' : ''; 
 	}
-	
+
 	
 	public function loadArticle_Rows($val,$dc)
 	{
@@ -286,7 +286,7 @@ class tl_stylepicker4ward extends Controller
 		}
 		return serialize($arrReturn);
 	}
-	
+
 	
 	
 	/* ===========================*/
@@ -395,7 +395,7 @@ class tl_stylepicker4ward extends Controller
 		else
 			$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($pid,$tbl);
 	}
-	
+
 	
 	/**
 	 * get all sections

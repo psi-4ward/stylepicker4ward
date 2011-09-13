@@ -61,6 +61,7 @@ class Stylepicker4ward_Wizard extends Backend
 		$this->Template->field = $field;
 		
 		$tbl = $this->Input->get('tbl');
+		$fld = str_replace('ctrl_', '', $field);
 		$sec = false;
 		$cond = false;
 		$layout = array();
@@ -124,6 +125,7 @@ class Stylepicker4ward_Wizard extends Backend
 		if($layout) $arrWhere[] = $layout.' IN (c.layouts)';
 		$arrWhere[] = 'tbl="'.$tbl.'"';
 		if($sec) $arrWhere[] = 'sec="'.$sec.'"';
+		if(strlen($fld)) $arrWhere[] = 'fld="'.$fld.'"';
 		
 		// get all classes
 		$objItems = $this->Database->execute('	SELECT c.*, GROUP_CONCAT(DISTINCT t.cond SEPARATOR ",") AS cond

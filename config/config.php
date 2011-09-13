@@ -16,8 +16,8 @@ $GLOBALS['TL_HOOKS']['loadDataContainer']['stylepicker4ward'] = array('Stylepick
 
 $GLOBALS['TL_EASY_THEMES_MODULES']['stylepicker4ward'] = array
 (
-        'href_fragment' => 'table=tl_stylepicker4ward',
-        'icon'          => 'system/modules/_stylepicker4ward/html/icon.png'
+		'href_fragment' => 'table=tl_stylepicker4ward',
+		'icon'          => 'system/modules/_stylepicker4ward/html/icon.png'
 );
 
 ?>
