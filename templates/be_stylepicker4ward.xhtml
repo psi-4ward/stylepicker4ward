@@ -40,10 +40,8 @@ var REQUEST_TOKEN = '<?php echo REQUEST_TOKEN; ?>';
   $objCombiner->add('system/themes/'. $this->theme .'/hover.js');
   echo $objCombiner->getCombinedFile();
 ?>"></script>
-<?php echo $this->javascripts; ?>
 <script src="system/modules/_stylepicker4ward/html/stylepicker4ward.js"></script>
 <!--[if lt IE 9]><script src="<?php echo TL_PLUGINS_URL; ?>plugins/html5shim/html5-<?php echo HTML5SHIM; ?>.js"></script><![endif]-->
-<?php echo $this->rteConfig; ?>
 <script>
 parent.REQUEST_TOKEN = REQUEST_TOKEN;
 </script>
@@ -66,7 +64,7 @@ parent.REQUEST_TOKEN = REQUEST_TOKEN;
 	<div class="item" onmouseout="Theme.hoverDiv(this, 0);" onmouseover="Theme.hoverDiv(this, 1);">
 	<div style="padding:5px 10px" class="clr">
 		<input type="checkbox" style="float:right;" value="<?php echo $item['cssclass'];?>"/>
-		<?php if(strlen($item['image'])):?><img src="<?php echo $this->getImage($item['image'],80,80,'proportional');?>" alt="" style="float:left;" rel="<?php echo $item['image'];?>"/><?php endif;?>
+		<?php if(strlen($item['image'])):?><img src="<?php echo $this->getImage($item['image'],80,80,'proportional');?>" alt="" style="float:left;cursor:pointer;" rel="<?php echo $item['image'];?>"/><?php endif;?>
 		<div style="margin-left:100px">
 			<h2><?php echo $item['title'];?> <span style="font-weight:normal">(<?php echo $item['cssclass'];?>)</span></h2>
 			<?php if(strlen($item['description'])):?><p class="description"><?php echo $item['description'];?></p><?php endif;?>

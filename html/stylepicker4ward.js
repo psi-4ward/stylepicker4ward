@@ -94,7 +94,7 @@ var Stylepicker4ward = new Class(
 					img.set('morph',{onComplete:function(){img.destroy();}}).morph({height:0,width:0});
 				});
 				img.inject(document.body);
-				img.morph({height:size.y,width:size.y});
+				img.morph({height:size.y,width:size.x});
 			}
 		});
 	}
