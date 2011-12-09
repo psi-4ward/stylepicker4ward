@@ -53,15 +53,16 @@ class Stylepicker4ward_Wizard extends Backend
 	{
 		$this->Template->headline = $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'];
 		
-		$field = $this->Input->get('fld');
-		if(!preg_match("~^[a-z\-_0-9]+$~i",$field))
-		{
-			die('Field-Parameter ERROR!');
-		}
-		$this->Template->field = $field;
-		
-		$tbl = $this->Input->get('tbl');
-		$fld = str_replace('ctrl_', '', $field);
+		$inputName = $this->Input->get('inputName');
+  		if(!preg_match("~^[a-z\-_0-9]+$~i",$inputName))
+  		{
+      		die('Field-Parameter ERROR!');
+  		}
+  		$this->Template->field = $inputName;
+
+  		$tbl = $this->Input->get('tbl');
+		$fld = $this->Input->get('fld');
+
 		$sec = false;
 		$cond = false;
 		$layout = array();

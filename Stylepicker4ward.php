@@ -44,8 +44,12 @@ class Stylepicker4ward extends Controller
 		}
 		
 		$GLOBALS['TL_CSS']['stylepicker4ward'] = 'system/modules/_stylepicker4ward/html/style.css';
-		$strField = 'ctrl_' . $dc->field . (($this->Input->get('act') == 'editAll') ? '_' . $dc->id : '');
-		return ' <a href="system/modules/_stylepicker4ward/popup.php?tbl='.$dc->table.'&fld='.$strField.'&id='.$dc->id.'" rel="lightbox[files 765 60%]">' . $this->generateImage('system/modules/_stylepicker4ward/html/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;"').'</a>';
+		return ' <a href="system/modules/_stylepicker4ward/popup.php?'
+		            . 'tbl='.$dc->table
+		            . '&fld='.$dc->field
+		            . '&inputName=ctrl_'.$dc->inputName
+		            . '&id='.$dc->id
+		            . '" rel="lightbox[files 765 60%]">' . $this->generateImage('system/modules/_stylepicker4ward/html/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;"').'</a>';
 		
 	}
 	

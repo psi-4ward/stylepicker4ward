@@ -363,7 +363,7 @@ class tl_stylepicker4ward extends Controller
 	}	
 	public function savePagelayouts($val)
 	{
-		$val = unserialize($val);
+		$val = deserialize($val,true);
 		return implode(',',$val);
 	}
 	
