@@ -16,10 +16,18 @@
 <!--[if IE]><link rel="stylesheet" href="<?php echo TL_SCRIPT_URL; ?>system/themes/<?php echo $this->theme; ?>/iefixes.css" media="screen"><![endif]-->
 <?php echo $this->stylesheets; ?>
 <style media="screen">
+body {
+	background-image: none;
+}
 #container {
   margin:0 auto;
   padding:12px 0;
   width:750px;
+}
+#main {
+	left:0px;
+	float:none;
+	min-height: 0px;
 }
 #tl_helpBox {
   margin-left:-353px;
