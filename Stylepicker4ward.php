@@ -49,7 +49,7 @@ class Stylepicker4ward extends Controller
 		            . '&fld='.$dc->field
 		            . '&inputName=ctrl_'.$dc->inputName
 		            . '&id='.$dc->id
-		            . '" rel="lightbox[files 765 60%]">' . $this->generateImage('system/modules/_stylepicker4ward/html/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;"').'</a>';
+		            . '" rel="lightbox[stylepicker 765 60%]">' . $this->generateImage('system/modules/_stylepicker4ward/html/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;"').'</a>';
 		
 	}
 	
