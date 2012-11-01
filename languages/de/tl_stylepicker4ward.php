@@ -40,7 +40,7 @@ $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article_Row']	= array('Spalten','De
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Pages']		= array('Seiten','Diese Styledefinition kann auf Seiten angewandt werden.');
 
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_rowError'] = 'Es muss mindestens eine Spalte gewählt werden.';
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ceError'] = 'Es muss mindestens eine Inhaltselement gewählt werden.';
 
 
-
-?>

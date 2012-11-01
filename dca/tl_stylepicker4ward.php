@@ -292,13 +292,21 @@ class tl_stylepicker4ward extends Controller
 		$this->truncateTargets($dc->id,'tl_content');
 		
 		$vals = unserialize($val);
+
+		if(!is_array($vals) && $this->Input->post('_CE_Row'))
+		{
+			throw new Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ceError']);
+		}
+
 		if(is_array($vals))
 		{
 			// get sections
 			$secs = $this->Input->post('_CE_Row');
 			if(!is_array($secs) || !count($secs))
-				return '';
-			
+			{
+				throw new Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_rowError']);
+			}
+
 			// save CEs foreach section
 			foreach($secs as $sec)
 			{
@@ -364,10 +372,10 @@ class tl_stylepicker4ward extends Controller
 	/**
 	 * Helperfunction to save a target
 	 * @param int $pid
-	 * @param str $tbl
-	 * @param str $field
-	 * @param str $section
-	 * @param str $condition
+	 * @param string $tbl
+	 * @param string $field
+	 * @param string $section
+	 * @param string $condition
 	 */
 	protected function saveTarget($pid,$tbl,$field,$section='',$condition='')
 	{
@@ -380,7 +388,8 @@ class tl_stylepicker4ward extends Controller
 	/**
 	 * Helperfunction to trunce old targets
 	 * @param int $pid
-	 * @param str $tbl
+	 * @param string $tbl
+	 * @param string|bool $fld
 	 */
 	protected function truncateTargets($pid,$tbl,$fld=false)
 	{
@@ -393,7 +402,7 @@ class tl_stylepicker4ward extends Controller
 	
 	/**
 	 * get all sections
-	 * @return arraytl_stylepicker4ward_target
+	 * @return array tl_stylepicker4ward_target
 	 */
 	public function getSections()
 	{
