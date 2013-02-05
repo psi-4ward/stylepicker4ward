@@ -26,9 +26,11 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	(
 		'sorting' => array
 		(
-			'mode'                    => 2,
+			'mode'                    => 4,
 			'fields'                  => array('title'),
+			'headerFields'            => array('name', 'author', 'tstamp'),
 			'flag'                    => 1,
+			'child_record_callback'   => array('tl_stylepicker4ward', 'generateItem'),
 			'panelLayout'             => 'sort,search,limit'
 		),
 		'label' => array
@@ -51,9 +53,16 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'copy' => array
 			(
 				'label'				  => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['copy'],
-				'href'				  => 'act=copy',
+				'href'				  =>  'act=paste&amp;mode=copy',
 				'icon'				  => 'copy.gif'
-			),			
+			),
+			'cut' => array
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['cut'],
+				'href'                => 'act=paste&amp;mode=cut',
+				'icon'                => 'cut.gif',
+				'attributes'          => 'onclick="Backend.getScrollOffset()"'
+			),
 			'delete' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['delete'],
@@ -117,7 +126,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'options_callback'		  => array('tl_stylepicker4ward','getPagelayouts'),
 			'load_callback'			  => array(array('tl_stylepicker4ward','loadPagelayouts')),
 			'save_callback'			  => array(array('tl_stylepicker4ward','savePagelayouts')),
-			'eval'					  => array('mandatory'=>true, 'multiple'=>true, 'doNotSaveEmpty'=>false, 'tl_class'=>'w50" style="height:auto;')		
+			'eval'					  => array('mandatory'=>true, 'multiple'=>true, 'doNotSaveEmpty'=>false, 'doNotCopy'=>true, 'tl_class'=>'w50" style="height:auto;')
 		),
 		
 		// Content Elements
@@ -190,6 +199,13 @@ class tl_stylepicker4ward extends Controller
 		parent::__construct();
 		$this->import('Database');
 	}
+
+
+	public function generateItem($arrRow)
+	{
+		return $arrRow['title'].': '.$arrRow['cssclass'];
+	}
+
 
 	/* ===========================*/
 	/*********** Pages ************/
