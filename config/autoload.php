@@ -11,4 +11,15 @@
  * @filesource
  */
 
-$GLOBALS['TL_LANG']['tl_content']['_cssclasses'] = 'CSS-Klassen: ';
+
+// Register the classes
+ClassLoader::addClasses(array
+(
+	'Stylepicker4ward' 	=> 'system/modules/stylepicker4ward/Stylepicker4ward.php',
+));
+
+// Register the templates
+TemplateLoader::addFiles(array
+(
+	'be_stylepicker4ward' 					=> 'system/modules/stylepicker4ward/templates',
+));

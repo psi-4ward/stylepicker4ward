@@ -1,13 +1,16 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
+ * Contao Extension to pick predefined CSS-Classes in the backend
  *
- * PHP version 5
- * @copyright  4ward.media 2011
+ * @copyright  4ward.media 2013
  * @author     Christoph Wiechert <christoph.wiechert@4wardmedia.de>
+ * @see        http://www.4wardmedia.de
  * @package    stylepicker4ward
+ * @licence    LGPL
  * @filesource
  */
+
 
 // Buttons
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['new'] 	= array('New css-class','Create new css-class');
@@ -38,6 +41,3 @@ $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article_Row']= array('Columns','The
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Pages']		= array('Pages','This style definition can be used for a page.');
 
-
-
-?>

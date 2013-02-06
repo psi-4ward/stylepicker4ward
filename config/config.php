@@ -1,16 +1,20 @@
-<?php if (!defined('TL_ROOT')) die('You can not access this file directly!');
+<?php
 
 /**
+ * Contao Extension to pick predefined CSS-Classes in the backend
  *
- * PHP version 5
- * @copyright  4ward.media 2011
+ * @copyright  4ward.media 2013
  * @author     Christoph Wiechert <christoph.wiechert@4wardmedia.de>
+ * @see        http://www.4wardmedia.de
  * @package    stylepicker4ward
+ * @licence    LGPL
  * @filesource
  */
 
 if(TL_MODE == 'BE')
 {
+	define('STYLEPICKER4WARD_PATH', substr(dirname(__FILE__), strlen(TL_ROOT)+1, -6));
+
 	$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_stylepicker4ward';
 	$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_stylepicker4ward_target';
 
@@ -19,7 +23,6 @@ if(TL_MODE == 'BE')
 	$GLOBALS['TL_EASY_THEMES_MODULES']['stylepicker4ward'] = array
 	(
 			'href_fragment' => 'table=tl_stylepicker4ward',
-			'icon'          => 'system/modules/_stylepicker4ward/html/icon.png'
+			'icon'          => STYLEPICKER4WARD_PATH.'assets/icon.png'
 	);
 }
-?>

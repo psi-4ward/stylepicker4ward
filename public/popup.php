@@ -1,10 +1,13 @@
-<?php 
+<?php
+
 /**
+ * Contao Extension to pick predefined CSS-Classes in the backend
  *
- * PHP version 5
- * @copyright  4ward.media 2011
+ * @copyright  4ward.media 2013
  * @author     Christoph Wiechert <christoph.wiechert@4wardmedia.de>
+ * @see        http://www.4wardmedia.de
  * @package    stylepicker4ward
+ * @licence    LGPL
  * @filesource
  */
 
@@ -14,7 +17,7 @@
  * Initialize the system
  */
 define('TL_MODE', 'BE');
-require_once('../../initialize.php');
+require_once('../../../initialize.php');
 
 
 class Stylepicker4ward_Wizard extends Backend
@@ -49,25 +52,25 @@ class Stylepicker4ward_Wizard extends Backend
 	}
 
 
-	public function generate()
+	public function compile()
 	{
 		$this->Template->headline = $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'];
 		
-		$inputName = $this->Input->get('inputName');
+		$inputName = \Input::get('inputName');
   		if(!preg_match("~^[a-z\-_0-9]+$~i",$inputName))
   		{
       		die('Field-Parameter ERROR!');
   		}
   		$this->Template->field = $inputName;
 
-  		$tbl = $this->Input->get('tbl');
-		$fld = $this->Input->get('fld');
+  		$tbl = \Input::get('tbl');
+		$fld = \Input::get('fld');
 
 		$sec = false;
 		$cond = false;
 		$layout = array();
 		
-		$id = $this->Input->get('id');
+		$id = \Input::get('id');
 		
 		// find pid (stylesheet-id) and section
 		switch($tbl)
@@ -134,6 +137,15 @@ class Stylepicker4ward_Wizard extends Backend
 								  				WHERE '.implode(' AND ',$arrWhere).'
 								  				GROUP BY c.id
 								  				ORDER BY c.title');
+		while($objItems->next())
+		{
+			if($objItems->image && is_numeric($objItems->image))
+			{
+				$objFile = \FilesModel::findByPk($objItems->image);
+				$objItems->image = $objFile->path;
+			}
+		}
+
 		$arrItems = $objItems->fetchAllAssoc();
 						
 		// filter condition
@@ -171,9 +183,8 @@ class Stylepicker4ward_Wizard extends Backend
 	public function run()
 	{
 		$this->Template = new BackendTemplate('be_stylepicker4ward');
-		$this->Template->main = '';
 
- 		$this->Template->main .= $this->generate();
+ 		$this->compile();
 
 		if (!strlen($this->Template->headline))
 		{
@@ -185,8 +196,8 @@ class Stylepicker4ward_Wizard extends Backend
 		$this->Template->language = $GLOBALS['TL_LANGUAGE'];
 		$this->Template->title = $GLOBALS['TL_CONFIG']['websiteTitle'];
 		$this->Template->charset = $GLOBALS['TL_CONFIG']['characterSet'];
-		$this->Template->pageOffset = $this->Input->cookie('BE_PAGE_OFFSET');
-		$this->Template->error = ($this->Input->get('act') == 'error') ? $GLOBALS['TL_LANG']['ERR']['general'] : '';
+		$this->Template->pageOffset = \Input::cookie('BE_PAGE_OFFSET');
+		$this->Template->error = (\Input::get('act') == 'error') ? $GLOBALS['TL_LANG']['ERR']['general'] : '';
 		$this->Template->skipNavigation = $GLOBALS['TL_LANG']['MSC']['skipNavigation'];
 		$this->Template->request = ampersand($this->Environment->request);
 		$this->Template->top = $GLOBALS['TL_LANG']['MSC']['backToTop'];
@@ -201,5 +212,3 @@ class Stylepicker4ward_Wizard extends Backend
 // run the stuff
 $x = new Stylepicker4ward_Wizard();
 $x->run();
-
-?>
