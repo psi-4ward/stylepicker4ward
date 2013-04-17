@@ -3,6 +3,7 @@ var Stylepicker4ward = new Class(
 	
     initialize: function(cont,parentField)
     {
+        var self = this;
 		this.checkboxes = cont.getElements('input');
 		// find parent class-field
 		var parentField = $(parent.document.getElementById(parentField));
@@ -28,8 +29,10 @@ var Stylepicker4ward = new Class(
 
 		// set click-events
     	cont.getElements('.item').each(function(el){
-    		el.addEvent('click',this.clickItem.bindWithEvent(this,[el]));
-    	}.bind(this));
+            el.addEvent('click',function(e) {
+                self.clickItem(e,el)
+            });
+    	});
     	
     	// check checkboxes if a classname is set
     	var classes = this.parentField.get('value').trim().split(' ');
