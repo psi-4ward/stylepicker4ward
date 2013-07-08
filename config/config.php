@@ -13,8 +13,6 @@
 
 if(TL_MODE == 'BE')
 {
-	define('STYLEPICKER4WARD_PATH', substr(dirname(__FILE__), strlen(TL_ROOT)+1, -6));
-
 	$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_stylepicker4ward';
 	$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_stylepicker4ward_target';
 
@@ -23,6 +21,6 @@ if(TL_MODE == 'BE')
 	$GLOBALS['TL_EASY_THEMES_MODULES']['stylepicker4ward'] = array
 	(
 			'href_fragment' => 'table=tl_stylepicker4ward',
-			'icon'          => STYLEPICKER4WARD_PATH.'assets/icon.png'
+			'icon'          => 'system/modules/stylepicker4ward/assets/icon.png'
 	);
 }

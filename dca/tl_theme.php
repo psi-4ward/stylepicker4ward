@@ -19,7 +19,7 @@ array_insert($GLOBALS['TL_DCA']['tl_theme']['list']['operations'],6,
 		(
 			'label'               => &$GLOBALS['TL_LANG']['tl_theme']['stylepicker4ward'],
 			'href'                => 'table=tl_stylepicker4ward',
-			'icon'                => STYLEPICKER4WARD_PATH.'assets/icon.png'
+			'icon'                => 'system/modules/stylepicker4ward/assets/icon.png'
 		)
 	)
 );

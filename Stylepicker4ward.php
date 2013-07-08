@@ -45,13 +45,13 @@ class Stylepicker4ward extends Controller
 
 	public function getStylepicker($dc)
 	{
-		$GLOBALS['TL_CSS']['stylepicker4ward'] = STYLEPICKER4WARD_PATH.'assets/style.css';
-		return ' <a href="javascript:Backend.openModalIframe({url:\''.STYLEPICKER4WARD_PATH.'public/popup.php?'
+		$GLOBALS['TL_CSS']['stylepicker4ward'] = 'system/modules/stylepicker4ward/assets/style.css';
+		return ' <a href="javascript:Backend.openModalIframe({url:\'system/modules/stylepicker4ward/public/popup.php?'
 		            . 'tbl='.$dc->table
 		            . '&fld='.$dc->field
 		            . '&inputName=ctrl_'.$dc->inputName
 		            . '&id='.$dc->id
-		            . '\',width:775,title:\'Stylepicker\'});">' . $this->generateImage(STYLEPICKER4WARD_PATH.'assets/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;"').'</a>';
+		            . '\',width:775,title:\'Stylepicker\'});">' . $this->generateImage('system/modules/stylepicker4ward/assets/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;"').'</a>';
 		
 	}
 	
