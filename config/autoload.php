@@ -11,15 +11,16 @@
  * @filesource
  */
 
+\Contao\ClassLoader::addNamespace('Psi');
 
 // Register the classes
 ClassLoader::addClasses(array
 (
-	'Stylepicker4ward' 	=> 'system/modules/stylepicker4ward/Stylepicker4ward.php',
+	'Psi\Stylepicker4ward\DcaHelper' 		=> 'system/modules/_stylepicker4ward/classes/DcaHelper.php',
 ));
 
 // Register the templates
 TemplateLoader::addFiles(array
 (
-	'be_stylepicker4ward' 					=> 'system/modules/stylepicker4ward/templates',
+	'be_stylepicker4ward' 					=> 'system/modules/_stylepicker4ward/templates',
 ));

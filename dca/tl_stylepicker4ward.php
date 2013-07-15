@@ -21,7 +21,15 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		'dataContainer'               => 'Table',
 		'ptable'					  => 'tl_theme',
 		'enableVersioning'            => true,
-		'oncopy_callback'			  => array(array('tl_stylepicker4ward','copy'))
+		'oncopy_callback'			  => array(array('Stylepicker4ward\DcaHelper','copy')),
+		'sql' => array
+		(
+			'keys' => array
+			(
+				'id' => 'primary',
+				'pid' => 'index',
+			)
+		)
 	),
 
 	// List
@@ -33,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'fields'                  => array('title'),
 			'headerFields'            => array('name', 'author', 'tstamp'),
 			'flag'                    => 1,
-			'child_record_callback'   => array('tl_stylepicker4ward', 'generateItem'),
+			'child_record_callback'   => array('Stylepicker4ward\DcaHelper', 'generateItem'),
 			'panelLayout'             => 'sort,search,limit'
 		),
 		'label' => array
@@ -91,6 +99,20 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 	// Fields
 	'fields' => array
 	(
+		'id' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL auto_increment"
+		),
+		'pid' => array
+		(
+			'foreignKey'              => 'tl_news_archive.title',
+			'sql'                     => "int(10) unsigned NOT NULL default '0'",
+			'relation'                => array('type'=>'belongsTo', 'load'=>'eager')
+		),
+		'tstamp' => array
+		(
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+		),
 		'title' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['title'],
@@ -98,20 +120,23 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'sorting'                 => true,
 			'flag'                    => 1,
 			'search'                  => true,
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50')
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
 		'description' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['description'],
 			'inputType'				  => 'textarea',
 			'search'				  => true,
-			'eval'					  => array('style'=>'height:50px;')
+			'eval'					  => array('style'=>'height:50px;'),
+			'sql'					  => "text NULL"
 		),
 		'image' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['image'],
 			'inputType'				  => 'fileTree',
-			'eval'					  => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,png,jpg')
+			'eval'					  => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,png,jpg'),
+			'sql'                     => "int(10) unsigned NOT NULL default '0'"
 		),
 		'cssclass' => array
 		(
@@ -119,17 +144,19 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'inputType'               => 'text',
 			'sorting'                 => true,
 			'search'                  => true,
-			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50')
+			'eval'                    => array('mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
+			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
 		
 		'layouts' => array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['layouts'],
 			'inputType'               => 'checkbox',
-			'options_callback'		  => array('tl_stylepicker4ward','getPagelayouts'),
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadPagelayouts')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','savePagelayouts')),
-			'eval'					  => array('mandatory'=>true, 'multiple'=>true, 'doNotSaveEmpty'=>false, 'doNotCopy'=>true, 'tl_class'=>'w50" style="height:auto;')
+			'options_callback'		  => array('Stylepicker4ward\DcaHelper','getPagelayouts'),
+			'load_callback'			  => array(array('Stylepicker4ward\DcaHelper','loadPagelayouts')),
+			'save_callback'			  => array(array('Stylepicker4ward\DcaHelper','savePagelayouts')),
+			'eval'					  => array('mandatory'=>true, 'multiple'=>true, 'doNotSaveEmpty'=>false, 'doNotCopy'=>true, 'tl_class'=>'w50" style="height:auto;'),
+			'sql'					  => "varchar(255) NOT NULL default ''"
 		),
 		
 		// Content Elements
@@ -137,9 +164,9 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CEs'],
 			'inputType'               => 'checkbox',
-			'options_callback'		  => array('tl_stylepicker4ward','getContentElements'),
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadCEs')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','saveCEs')),
+			'options_callback'		  => array('Stylepicker4ward\DcaHelper','getContentElements'),
+			'load_callback'			  => array(array('Stylepicker4ward\DcaHelper','loadCEs')),
+			'save_callback'			  => array(array('Stylepicker4ward\DcaHelper','saveCEs')),
 			'reference'               => &$GLOBALS['TL_LANG']['CTE'],
 			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')
 		),
@@ -147,9 +174,9 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row'],
 			'inputType'               => 'checkbox',
-			'options_callback'		  => array('tl_stylepicker4ward','getSections'),
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadCE_Rows')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','doNothing')),
+			'options_callback'		  => array('Stylepicker4ward\DcaHelper','getSections'),
+			'load_callback'			  => array(array('Stylepicker4ward\DcaHelper','loadCE_Rows')),
+			'save_callback'			  => array(array('Stylepicker4ward\DcaHelper','doNothing')),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_article'],
 			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')
 		),
@@ -159,25 +186,25 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article'],
 			'inputType'               => 'checkbox',
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadArticles')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticles')),
+			'load_callback'			  => array(array('Stylepicker4ward\DcaHelper','loadArticles')),
+			'save_callback'			  => array(array('Stylepicker4ward\DcaHelper','saveArticles')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
 		),
 		'_ArticleTeaser' => array
 		(
 			'label'					  => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ArticleTeaser'],
 			'inputType'				  => 'checkbox',
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadArticleTeasers')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','saveArticleTeasers')),
+			'load_callback'			  => array(array('Stylepicker4ward\DcaHelper','loadArticleTeasers')),
+			'save_callback'			  => array(array('Stylepicker4ward\DcaHelper','saveArticleTeasers')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
 		),
 		'_Article_Row' => array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_CE_Row'],
 			'inputType'               => 'checkbox',
-			'options_callback'		  => array('tl_stylepicker4ward','getSections'),
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadArticle_Rows')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','doNothing')),
+			'options_callback'		  => array('Stylepicker4ward\DcaHelper','getSections'),
+			'load_callback'			  => array(array('Stylepicker4ward\DcaHelper','loadArticle_Rows')),
+			'save_callback'			  => array(array('Stylepicker4ward\DcaHelper','doNothing')),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_article'],
 			'eval'					  => array('multiple'=>true, 'doNotSaveEmpty'=>true, 'tl_class'=>'w50" style="height:auto;')
 		),
@@ -187,290 +214,9 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		(
 			'label'				      => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Pages'],
 			'inputType'               => 'checkbox',
-			'load_callback'			  => array(array('tl_stylepicker4ward','loadPages')),
-			'save_callback'			  => array(array('tl_stylepicker4ward','savePages')),
+			'load_callback'			  => array(array('Stylepicker4ward\DcaHelper','loadPages')),
+			'save_callback'			  => array(array('Stylepicker4ward\DcaHelper','savePages')),
 			'eval'					  => array('doNotSaveEmpty'=>true, 'tl_class'=>'w50')
 		),		
 	)
 );
-
-
-class tl_stylepicker4ward extends Controller 
-{
-	public function __construct()
-	{
-		parent::__construct();
-		$this->import('Database');
-	}
-
-
-	public function generateItem($arrRow)
-	{
-		return $arrRow['title'].': '.$arrRow['cssclass'];
-	}
-
-
-	/* ===========================*/
-	/*********** Pages ************/
-	/* ===========================*/	
-	public function savePages($val,$dc)
-	{
-		// delete all records for this table/pid
-		$this->truncateTargets($dc->id,'tl_page');
-		
-		if(strlen($val))
-		{
-			$this->saveTarget($dc->id,'tl_page','cssClass');				
-		}
-		return '';
-	}
-	public function loadPages($val,$dc)
-	{
-		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($dc->id,'tl_page');
-		return ($objTargets->anz > 0) ? '1' : ''; 
-	}
-	
-	/* ===========================*/
-	/********** Articles **********/
-	/* ===========================*/
-	public function saveArticles($val,$dc)
-	{
-		// delete all records for this table/pid
-		$this->truncateTargets($dc->id,'tl_article','cssID');
-		
-		if(strlen($val))
-		{
-			// get sections
-			$secs = $this->Input->post('_Article_Row');
-			if(!is_array($secs) || !count($secs))
-				return '';
-			
-			// save foreach section
-			foreach($secs as $sec)
-			{
-				$this->saveTarget($dc->id,'tl_article','cssID',$sec);				
-			}			
-		}
-		return '';
-	}
-	public function loadArticles($val,$dc)
-	{
-		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','cssID');
-		return ($objTargets->anz > 0) ? '1' : ''; 
-	}
-	
-	public function saveArticleTeasers($val,$dc)
-	{
-		// delete all records for this table/pid
-		$this->truncateTargets($dc->id,'tl_article','teaserCssID');
-		
-		if(strlen($val))
-		{
-			// get sections
-			$secs = $this->Input->post('_Article_Row');
-			if(!is_array($secs) || !count($secs))
-				return '';
-			
-			// save foreach section
-			foreach($secs as $sec)
-			{
-				$this->saveTarget($dc->id,'tl_article','teaserCssID',$sec);				
-			}			
-		}
-		return '';
-	}
-	public function loadArticleTeasers($val,$dc)
-	{
-		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT count(pid) AS anz FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($dc->id,'tl_article','teaserCssID');
-		return ($objTargets->anz > 0) ? '1' : ''; 
-	}
-
-	
-	public function loadArticle_Rows($val,$dc)
-	{
-		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT DISTINCT(sec) FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($dc->id,'tl_article');
-		while($objTargets->next())
-		{
-			$arrReturn[] = $objTargets->sec;
-		}
-		return serialize($arrReturn);
-	}
-
-	
-	
-	/* ===========================*/
-	/****** Content elements ******/
-	/* ===========================*/
-	public function saveCEs($val,$dc)
-	{
-		// delete all records for this table/pid
-		$this->truncateTargets($dc->id,'tl_content');
-		
-		$vals = unserialize($val);
-
-		if(!is_array($vals) && $this->Input->post('_CE_Row'))
-		{
-			throw new Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ceError']);
-		}
-
-		if(is_array($vals))
-		{
-			// get sections
-			$secs = $this->Input->post('_CE_Row');
-			if(!is_array($secs) || !count($secs))
-			{
-				throw new Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_rowError']);
-			}
-
-			// save CEs foreach section
-			foreach($secs as $sec)
-			{
-				foreach($vals as $val)
-				{	
-					$this->saveTarget($dc->id,'tl_content','cssID',$sec,$val);				
-				}
-			}	
-		}
-		return '';
-	}
-	public function loadCEs($val,$dc)
-	{
-		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT DISTINCT(cond) FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($dc->id,'tl_content');
-		while($objTargets->next())
-		{
-			$arrReturn[] = $objTargets->cond;
-		}
-		return serialize($arrReturn);
-	}
-	public function loadCE_Rows($val,$dc)
-	{
-		$arrReturn = array();
-		$objTargets = $this->Database->prepare('SELECT DISTINCT(sec) FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($dc->id,'tl_content');
-		while($objTargets->next())
-		{
-			$arrReturn[] = $objTargets->sec;
-		}
-		return serialize($arrReturn);
-	}
-	/**
-	* lädt vorhandene Inhaltselemente aus $GLOBALS['TL_CTE']
-	* @return array
-	*/
-	public function getContentElements()
-	{
-		$arrCEs = array();
-		foreach ($GLOBALS['TL_CTE'] as $key => $arr)
-		{
-			foreach ($arr as $elementName => $val)
-			{
-				array_push($arrCEs, $elementName);
-			}
-		}
-
-		return $arrCEs;    
-	}
-	
-	
-	
-	public function loadPagelayouts($val)
-	{
-		$val = explode(',',$val);
-		return serialize($val);
-	}	
-	public function savePagelayouts($val)
-	{
-		$val = deserialize($val,true);
-		return implode(',',$val);
-	}
-	
-	/**
-	 * Helperfunction to save a target
-	 * @param int $pid
-	 * @param string $tbl
-	 * @param string $field
-	 * @param string $section
-	 * @param string $condition
-	 */
-	protected function saveTarget($pid,$tbl,$field,$section='',$condition='')
-	{
-		// delete old CEs
-		$this->Database->prepare('INSERT INTO tl_stylepicker4ward_target SET pid=?,tbl=?,fld=?,sec=?,cond=?,tstamp=?')
-					   ->execute($pid,$tbl,$field,$section,$condition,time());
-		
-	}
-
-	/**
-	 * Helperfunction to trunce old targets
-	 * @param int $pid
-	 * @param string $tbl
-	 * @param string|bool $fld
-	 */
-	protected function truncateTargets($pid,$tbl,$fld=false)
-	{
-		if($fld)
-			$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=? AND fld=?')->execute($pid,$tbl,$fld);
-		else
-			$this->Database->prepare('DELETE FROM tl_stylepicker4ward_target WHERE pid=? AND tbl=?')->execute($pid,$tbl);
-	}
-
-	
-	/**
-	 * get all sections
-	 * @return array tl_stylepicker4ward_target
-	 */
-	public function getSections()
-	{
-		$this->loadLanguageFile('tl_article');
-		$ret = array('header','left','right','main','footer');
-		
-		$custom = explode(',',$GLOBALS['TL_CONFIG']['customSections']);
-		if(strlen($GLOBALS['TL_CONFIG']['customSections']) && is_array($custom)) $ret = array_merge($ret,$custom);
-				
-		return $ret;
-	}
-
-	/**
-	 * get all pagelayouts for the current theme
-	 * @param DataContainer $dc
-	 * @return array
-	 */
-	public function getPagelayouts($dc)
-	{
-		$objLayouts = $this->Database->prepare('SELECT id,name FROM tl_layout WHERE pid=?')->execute($dc->activeRecord->pid);
-		$arrLayouts = array();
-		while($objLayouts->next())	$arrLayouts[$objLayouts->id] = $objLayouts->name;
-		return $arrLayouts;
-	}
-	
-	/**
-	 * void function for some callbacks
-	 * @return string ''
-	 */
-	public function doNothing()
-	{
-		return '';
-	}
-	
-	/**
-	 * copy a definition
-	 * @param int $insertID
-	 * @param DataContainer $dc
-	 */
-	public function copy($insertID, $dc)
-	{
-		// also copy targets
-		$this->Database->prepare('INSERT INTO tl_stylepicker4ward_target (pid,tstamp,tbl,fld,cond,sec)
-									SELECT ?, UNIX_TIMESTAMP(), tbl,fld,cond,sec 
-									FROM tl_stylepicker4ward_target 
-									WHERE pid=?')->execute($insertID,$dc->id);
-	}
-
-	
-	
-
-}
