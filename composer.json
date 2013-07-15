@@ -27,7 +27,7 @@
 	"extra": {
 		"contao": {
 			"symlinks": {
-				"contao": "system/modules/_stylepicker4ward"
+				"contao": "system/modules/stylepicker4ward"
 			}
 		}
 	}
