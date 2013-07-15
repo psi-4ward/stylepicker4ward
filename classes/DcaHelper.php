@@ -33,7 +33,7 @@ class DcaHelper extends \Controller
 	public function injectStylepicker($table)
 	{
 		// dont inject in some system-modules
-		if(in_array(\Input::get('do'),array('repository_manager', 'repository_catalog', 'maintenance', 'settings', 'log', 'autoload'))) return;
+		if(in_array(\Input::get('do'),array('repository_manager', 'repository_catalog', 'maintenance', 'settings', 'log', 'autoload', 'composer'))) return;
 
 
 		$objErg = $this->Database->prepare('SELECT DISTINCT(fld) FROM tl_stylepicker4ward_target WHERE tbl=?')->execute($table);
