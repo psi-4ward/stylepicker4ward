@@ -11,7 +11,7 @@
  * @filesource
  */
 
-if(TL_MODE == 'BE')
+if(TL_MODE == 'BE' && \Input::get('do') != 'repository_manager' && \Input::get('do') != 'composer')
 {
 	$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_stylepicker4ward';
 	$GLOBALS['BE_MOD']['design']['themes']['tables'][] = 'tl_stylepicker4ward_target';
