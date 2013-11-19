@@ -24,6 +24,9 @@
 		"php":">=5.3",
 		"contao/core": "~3.1"
 	},
+   "replace": {
+        "contao-legacy/stylepicker4ward": "*"
+    },		
 	"extra": {
 		"contao": {
 			"symlinks": {
