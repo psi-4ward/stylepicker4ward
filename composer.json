@@ -1,37 +1,43 @@
 {
-	"name":"psi/stylepicker4ward",
-	"description":"CSS Class selection wizard for contao",
-	"keywords":["css class"],
-	"type":"contao-module",
-	"homepage":"https://github.com/psi-4ward/stylepicker4ward",
-	"license":"LGPL-3.0+",
-	"authors":[
-		{
-			"name":"Christoph Wiechert",
-			"email":"cw@4wardmedia.de",
-			"homepage":"http://4wardmedia.de",
-			"role":"Developer"
-		}
-	],
-	"support":{
-		"email":"cw@4wardmedia.de",
-		"issues":"https://github.com/psi-4ward/stylepicker4ward/issues",
-		"forum":"https://community.contao.org/de/forumdisplay.php?110-4ward",
-		"irc":"irc://irc.freenode.org/contao.dev",
-		"source":"https://github.com/psi-4ward/stylepicker4ward"
-	},
-	"require":{
-		"php":">=5.3",
-		"contao/core": ">=3.1,<3.3"
-	},
-   "replace": {
-        "contao-legacy/stylepicker4ward": "*"
-    },		
-	"extra": {
-		"contao": {
-			"symlinks": {
-				".": "system/modules/_stylepicker4ward"
-			}
-		}
-	}
+  "name": "psi/stylepicker4ward",
+  "description": "CSS Class selection wizard for contao",
+  "keywords": ["css class"],
+  "type": "contao-module",
+  "homepage": "https://github.com/psi-4ward/stylepicker4ward",
+  "license": "LGPL-3.0+",
+  "authors": [
+    {
+      "name": "Christoph Wiechert",
+      "email": "cw@4wardmedia.de",
+      "homepage": "http://4wardmedia.de",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "cw@4wardmedia.de",
+    "issues": "https://github.com/psi-4ward/stylepicker4ward/issues",
+    "forum": "https://community.contao.org/de/forumdisplay.php?110-4ward",
+    "irc": "irc://irc.freenode.org/contao.dev",
+    "source": "https://github.com/psi-4ward/stylepicker4ward"
+  },
+  "require": {
+    "php": ">=5.3",
+    "contao/core": ">=3.1,<3.3"
+  },
+  "replace": {
+    "contao-legacy/stylepicker4ward": "self.version"
+  },
+  "conflict": {
+    "contao/core": "3.0.*"
+  },
+  "extra": {
+    "contao": {
+      "sources": {
+        "": "system/modules/_stylepicker4ward"
+      },
+      "runonce": [
+        "runonce/32update.php"
+      ]
+    }
+  }
 }

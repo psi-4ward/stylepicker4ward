@@ -149,9 +149,9 @@ class Stylepicker4ward_Wizard extends Backend
 								  				ORDER BY c.title');
 		while($objItems->next())
 		{
-			if($objItems->image && is_numeric($objItems->image))
+			if($objItems->image)
 			{
-				$objFile = \FilesModel::findByPk($objItems->image);
+				$objFile = \FilesModel::findByUuid($objItems->image);
 				$objItems->image = $objFile->path;
 			}
 		}
