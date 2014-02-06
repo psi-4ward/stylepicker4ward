@@ -179,7 +179,7 @@ class DcaHelper extends \Controller
 
 		if(!is_array($vals) && $this->Input->post('_CE_Row'))
 		{
-			throw new Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ceError']);
+			throw new \Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_ceError']);
 		}
 
 		if(is_array($vals))
@@ -188,7 +188,7 @@ class DcaHelper extends \Controller
 			$secs = $this->Input->post('_CE_Row');
 			if(!is_array($secs) || !count($secs))
 			{
-				throw new Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_rowError']);
+				throw new \Exception($GLOBALS['TL_LANG']['tl_stylepicker4ward']['_rowError']);
 			}
 
 			// save CEs foreach section
