@@ -128,7 +128,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['description'],
 			'inputType'				  => 'textarea',
 			'search'				  => true,
-			'eval'					  => array('style'=>'height:50px;'),
+			'eval'					  => array('style'=>'height:50px;', 'tl_class' => 'clr'),
 			'sql'					  => "text NULL"
 		),
 		'image' => array
@@ -136,7 +136,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 			'label'                   => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['image'],
 			'inputType'				  => 'fileTree',
 			'eval'					  => array('fieldType'=>'radio', 'files'=>true, 'extensions'=>'gif,png,jpg'),
-			'sql'                     => "int(10) unsigned NOT NULL default '0'"
+			'sql'                     => "blob NULL"
 		),
 		'cssclass' => array
 		(
