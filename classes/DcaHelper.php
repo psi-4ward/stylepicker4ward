@@ -60,12 +60,42 @@ class DcaHelper extends \Controller
 	public function getStylepicker($dc)
 	{
 		$GLOBALS['TL_CSS']['stylepicker4ward'] = 'system/modules/_stylepicker4ward/assets/style.css';
-		return ' <a href="javascript:Backend.openModalIframe({url:\'system/modules/_stylepicker4ward/public/popup.php?'
-		            . 'tbl='.$dc->table
-		            . '&fld='.$dc->field
-		            . '&inputName=ctrl_'.$dc->inputName
-		            . '&id='.$dc->id
-		            . '\',width:775,title:\'Stylepicker\'});">' .  \Image::getHtml('system/modules/_stylepicker4ward/assets/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;"').'</a>';
+
+		$url = 'system/modules/_stylepicker4ward/public/popup.php?tbl='.$dc->table.'&fld='.$dc->field.'&inputName=ctrl_'.$dc->inputName.'&id='.$dc->id;
+
+		static $injected = false;
+
+		if(!$injected)
+		{
+			$str = <<<CssButton
+<script type="text/javascript">
+function openStylepickerPopup(url) {
+	var opt = {width: 775};
+	var max = (window.getSize().y-180).toInt();
+	if (!opt.height || opt.height > max) opt.height = max;
+	var M = new SimpleModal({
+		'width': opt.width,
+		'draggable': false,
+		'okBtn': 'OK',
+		'overlayOpacity': .5,
+		'onShow': function() { document.body.setStyle('overflow', 'hidden'); },
+		'onHide': function() { document.body.setStyle('overflow', 'auto'); }
+	});
+	M.show({
+		'title': 'Stylepicker',
+		'contents': '<iframe src="' + url + '" width="100%" height="' + opt.height + '" frameborder="0"></iframe>'
+	});
+}
+</script>
+CssButton;
+			$injected = true;
+		}
+		else
+		{
+			$str = '';
+		}
+
+		return $str . ' <a href="javascript:openStylepickerPopup(\''.$url.'\');">' .  \Image::getHtml('system/modules/_stylepicker4ward/assets/icon.png', $GLOBALS['TL_LANG']['MSC']['stylepicker4ward'], 'style="vertical-align:top;margin-left:3px;margin-top:3px;"').'</a>';
 
 	}
 
