@@ -18,15 +18,64 @@
 <?php echo $this->stylesheets; ?>
 <style media="screen">
 body {
-	background-image: none;
+  background-image: none;
 }
 body.popup #main {
-	left:0;
-	float:none;
-	min-height: 0;
+  left:0;
+  float:none;
+  min-height: 0;
 }
 body.popup #tl_helpBox {
   margin-left:-353px;
+}
+.item {
+  padding-top:7px;
+}
+.item > div {
+  padding:5px 10px 5px 35px;
+  width:100%;
+  clear:both;
+  overflow:hidden;
+  position:relative;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+}
+.item > div.image {
+  /* min-height:100px;
+  padding-right:110px; */
+}
+.item > div img {
+  cursor:pointer;
+  float:left;
+  margin:12px 10px 5px 0;
+}
+.item > div > input {
+  position:absolute;
+  left:5px;
+  top:5px;
+}
+.item > div > div {
+  margin-bottom:10px; 
+  float:none;
+  display:block;
+  width:auto;
+}
+.item > div h2 {
+  margin:1px 0 0;
+  clear:both;
+}
+.item > div span {
+  color:#A6A6A6;
+  font-weight:normal
+}
+.item > div p {
+  margin-bottom:0;
+  margin-top:9px;
+}
+hr {
+  height:1px;
+  margin:0px;
 }
 </style>
 <script><?php echo $this->getLocaleString(); ?></script>
@@ -59,28 +108,28 @@ body.popup #tl_helpBox {
 <div class="tl_formbody_edit" id="styleItems" style="padding:10px">
 <?php if(count($this->items)):?>
 <?php foreach($this->items as $item):?>
-	<div class="item" onmouseout="Theme.hoverDiv(this, 0);" onmouseover="Theme.hoverDiv(this, 1);">
-	<div style="padding:5px 10px" class="clr">
-		<input type="checkbox" style="float:right;" value="<?php echo $item['cssclass'];?>"/>
-		<?php if(strlen($item['image'])):?>
-			<img src="<?php echo $this->getImage($item['image'],80,80,'proportional');?>" alt="" style="float:left;cursor:pointer;" rel="<?php echo $item['image'];?>"/>
-		<?php endif;?>
-		<div style="margin-left:100px">
-			<h2><?php echo $item['title'];?> <span style="font-weight:normal">(<?php echo $item['cssclass'];?>)</span></h2>
-			<?php if(strlen($item['description'])):?><p class="description"><?php echo $item['description'];?></p><?php endif;?>
-		</div>
-	</div>
-		<hr style="height:1px;margin:0px;"/>
-	</div>
-	
+    <div class="item" onmouseout="Theme.hoverDiv(this, 0);" onmouseover="Theme.hoverDiv(this, 1);">
+    <div<?php if(strlen($item['image'])):?> class="image"<?php endif; ?>>
+        <input type="checkbox" value="<?php echo $item['cssclass'];?> "/>
+        <div>
+            <h2><?php echo $item['title'];?> <span>(<?php echo $item['cssclass'];?>)</span></h2>
+            <?php if(strlen($item['image'])):?>
+                <?php $objFile = \FilesModel::findByPk($item['image']); ?>
+                <img src="<?php echo $this->getImage($objFile->path,80,80,'proportional');?>" alt="" rel="<?php echo $objFile->path;?>"/>
+            <?php endif;?>
+            <?php if(strlen($item['description'])):?><p class="description"><?php echo $item['description'];?></p><?php endif;?>
+        </div>
+    </div>
+        <hr />
+    </div>
 <?php endforeach;?>
 <?php else:?>
-	<p class="error"><?php echo $GLOBALS['TL_LANG']['MSC']['stylepicker4ward_noItems'];?></p>
+    <p class="error"><?php echo $GLOBALS['TL_LANG']['MSC']['stylepicker4ward_noItems'];?></p>
 <?php endif;?>
 </div>
 <script>
 window.addEvent('domready',function(){
-	new Stylepicker4ward($('styleItems'),'<?php echo $this->field;?>');
+    new Stylepicker4ward($('styleItems'),'<?php echo $this->field;?>');
 });
 </script>
 
