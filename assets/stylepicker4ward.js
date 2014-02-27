@@ -40,7 +40,7 @@ var Stylepicker4ward = new Class(
     	{
     		for(var j=0;j<this.checkboxes.length;j++)
     		{
-    			if(classes[i] == $(this.checkboxes[j]).get('value'))
+    			if(classes[i].trim() == $(this.checkboxes[j]).get('value').trim())
     				this.checkboxes[j].checked = true;
     		}
     	}
