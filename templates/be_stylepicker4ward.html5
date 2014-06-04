@@ -11,7 +11,6 @@
   $objCombiner = new Combiner();
   $objCombiner->add('system/themes/'. $this->theme .'/basic.css');
   $objCombiner->add('system/themes/'. $this->theme .'/main.css');
-  $objCombiner->add('assets/mootools/datepicker/'. DATEPICKER .'/dashboard.css', DATEPICKER);
   echo $objCombiner->getCombinedFile();
 ?>">
 <!--[if IE]><link rel="stylesheet" href="<?php echo TL_ASSETS_URL; ?>system/themes/<?php echo $this->theme; ?>/iefixes.css"><![endif]-->
