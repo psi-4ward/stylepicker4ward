@@ -62,14 +62,12 @@ var Stylepicker4ward = new Class(
 		}
 		
 		// update parent-field
-		var classname = inp.get('value');
-		var classes = this.parentField.get('value').trim().split(' ');
+		var classname = inp.get('value').trim();
+		var classes = this.parentField.get('value').trim().split(' ').erase('').erase(' ');
 		if(inp.checked)
 		{
 			// add classname
-			if(!classes.contains(classname))
-				classes.push(classname)
-			
+			if(!classes.contains(classname)) classes.push(classname)
 		}
 		else
 		{
