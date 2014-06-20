@@ -51,7 +51,12 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		),
 		'global_operations' => array
 		(
-			
+			'import' => array
+			(
+				'label' => &$GLOBALS['TL_LANG']['tl_stylepicker4ward']['stylepicker4ward_import'],
+				'href'  => 'key=stylepicker4ward_import',
+				'class' => 'header_new'
+			),
 		),
 		'operations' => array
 		(
@@ -105,7 +110,7 @@ $GLOBALS['TL_DCA']['tl_stylepicker4ward'] = array
 		),
 		'pid' => array
 		(
-			'foreignKey'              => 'tl_news_archive.title',
+			'foreignKey'              => 'tl_layout.name',
 			'sql'                     => "int(10) unsigned NOT NULL default '0'",
 			'relation'                => array('type'=>'belongsTo', 'load'=>'eager')
 		),
