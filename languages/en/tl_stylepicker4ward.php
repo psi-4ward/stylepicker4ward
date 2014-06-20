@@ -41,3 +41,4 @@ $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Article_Row']= array('Columns','The
 
 $GLOBALS['TL_LANG']['tl_stylepicker4ward']['_Pages']		= array('Pages','This style definition can be used for a page.');
 
+$GLOBALS['TL_LANG']['tl_stylepicker4ward']['stylepicker4ward_import'] = array('Import CSS-Classes', 'Import CSS-Classes');

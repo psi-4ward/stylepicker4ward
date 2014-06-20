@@ -16,11 +16,13 @@
 // Register the classes
 ClassLoader::addClasses(array
 (
-	'Psi\Stylepicker4ward\DcaHelper' 		=> 'system/modules/_stylepicker4ward/classes/DcaHelper.php',
+		'Psi\Stylepicker4ward\DcaHelper' => 'system/modules/_stylepicker4ward/classes/DcaHelper.php',
+		'Psi\Stylepicker4ward\Importer'  => 'system/modules/_stylepicker4ward/classes/Importer.php',
 ));
 
 // Register the templates
 TemplateLoader::addFiles(array
 (
-	'be_stylepicker4ward' 					=> 'system/modules/_stylepicker4ward/templates',
+		'be_stylepicker4ward'          => 'system/modules/_stylepicker4ward/templates',
+		'be_stylepicker4ward_importer' => 'system/modules/_stylepicker4ward/templates',
 ));

@@ -1,0 +1,30 @@
+<div id="tl_buttons">
+	<a href="<?php echo $this->href; ?>" class="header_back"
+		title="<?php echo $this->title; ?>"><?php echo $this->button; ?></a>
+</div>
+
+<h2 class="sub_headline"><?php echo $GLOBALS['TL_LANG']['stylepicker4ward_import']['headline'] ?></h2>
+
+<form action="<?php echo Environment::get('request') ?>" class="tl_form" method="post">
+	<div class="tl_formbody_edit">
+		<input type="hidden" name="REQUEST_TOKEN" value="<?php echo RequestToken::get() ?>">
+
+		<fieldset id="pal_import_legend" class="tl_tbox">
+			<legend onclick="AjaxRequest.toggleFieldset(this,'import_legend','tl_stylepicker4ward')">CSS-Klasse</legend>
+
+			<div>
+				<?php echo $this->layoutsWidget->parse(); ?>
+			</div>
+
+			<div>
+				<?php echo $this->presetWidget->parse(); ?>
+			</div>
+
+		</fieldset>
+	</div>
+	<div class="tl_formbody_submit">
+		<div class="tl_submit_container">
+			<input type="submit" name="import" class="tl_submit" value="<?php echo $GLOBALS['TL_LANG']['stylepicker4ward_import']['submit'] ?>">
+		</div>
+	</div>
+</form>
