@@ -76,7 +76,7 @@ class Importer
 						'id'          => null,
 						'pid'         => \Input::get('id'),
 						'tstamp'      => time(),
-						'title'       => $config['title'],
+						'title'       => isset($config['title']) ? $config['title'] : $class,
 						'description' => $config['description'],
 						'cssclass'    => $class,
 						'layouts'     => implode(',', $layoutsWidget->value),
