@@ -81,14 +81,15 @@ class Stylepicker4ward_Wizard extends Backend
 		$layout = array();
 		
 		$id = \Input::get('id');
-		
+		$ptable = ""; // find if we deal with news
 		// find pid (stylesheet-id) and section
 		switch($tbl)
 		{
 			case 'tl_content':
-				$objContent = $this->Database->prepare("SELECT type,pid FROM tl_content WHERE id=?")->limit(1)->execute($id);
+				$objContent = $this->Database->prepare("SELECT type,pid,ptable FROM tl_content WHERE id=?")->limit(1)->execute($id);
 				$id = $objContent->pid;
 				$cond = $objContent->type;
+                $ptable =$objContent->ptable; // tl_news?
 				
 			case 'tl_article':
 				$objArticle = $this->Database->prepare("SELECT pid,inColumn FROM tl_article WHERE id=?")->limit(1)->execute($id);
@@ -124,7 +125,7 @@ class Stylepicker4ward_Wizard extends Backend
 							break;
 						}
 					}
-				}			
+				}
 			break;
 		}
 
@@ -135,7 +136,8 @@ class Stylepicker4ward_Wizard extends Backend
 		
 		$arrWhere = array();
 		$arrWhere[] = 'c.tstamp <> 0';
-		if($layout) $arrWhere[] = 'FIND_IN_SET('.$layout.',c.layouts)';		
+        // dirty little hack: news do not have layouts. Skip the layouts and use everything
+		if($layout && $ptable != "tl_news") $arrWhere[] = 'FIND_IN_SET('.$layout.',c.layouts)';
 		$arrWhere[] = 'tbl="'.$tbl.'"';
 		if($sec) $arrWhere[] = 'sec="'.$sec.'"';
 		if(strlen($fld)) $arrWhere[] = 'fld="'.$fld.'"';
